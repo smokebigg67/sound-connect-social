@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mic } from "lucide-react";
+import { Radio } from "lucide-react";
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -21,14 +21,14 @@ const Auth = () => {
       <div className="w-full max-w-md space-y-8">
         {/* Logo/Brand */}
         <div className="text-center space-y-2">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-audio mb-4">
-            <Mic className="w-8 h-8 text-white" />
+          <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-echo mb-4 shadow-echo animate-pulse-glow">
+            <Radio className="w-10 h-10 text-black" />
           </div>
-          <h1 className="text-4xl font-bold bg-gradient-audio bg-clip-text text-transparent">
-            VoiceConnect
+          <h1 className="text-5xl font-black text-primary tracking-tight">
+            ECHO
           </h1>
-          <p className="text-muted-foreground">
-            Where conversations come alive through audio
+          <p className="text-muted-foreground text-lg">
+            Your voice, amplified
           </p>
         </div>
 
@@ -78,7 +78,7 @@ const Auth = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full bg-gradient-audio hover:opacity-90 transition-opacity">
+              <Button type="submit" className="w-full bg-gradient-echo hover:opacity-90 transition-opacity text-black font-bold shadow-echo">
                 {isLogin ? "Sign In" : "Create Account"}
               </Button>
             </form>

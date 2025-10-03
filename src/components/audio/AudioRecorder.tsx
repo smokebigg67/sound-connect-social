@@ -127,16 +127,16 @@ const AudioRecorder = ({ onRecordingComplete, maxDuration = 300 }: AudioRecorder
         <div className="flex flex-col items-center space-y-4">
           <button
             onClick={isRecording ? stopRecording : startRecording}
-            className={`w-20 h-20 rounded-full flex items-center justify-center transition-all ${
+            className={`w-20 h-20 rounded-full flex items-center justify-center transition-all shadow-echo ${
               isRecording
                 ? "bg-destructive animate-pulse-glow"
-                : "bg-gradient-audio hover:opacity-90"
+                : "bg-gradient-echo hover:opacity-90"
             }`}
           >
             {isRecording ? (
-              <Square className="w-8 h-8 text-white" />
+              <Square className="w-8 h-8 text-black" />
             ) : (
-              <Mic className="w-8 h-8 text-white" />
+              <Mic className="w-8 h-8 text-black" />
             )}
           </button>
 
@@ -168,18 +168,17 @@ const AudioRecorder = ({ onRecordingComplete, maxDuration = 300 }: AudioRecorder
         </div>
       ) : (
         <div className="space-y-4">
-          <div className="flex items-center justify-center space-x-4 p-4 bg-card rounded-lg border border-border">
+          <div className="flex items-center justify-center space-x-4 p-4 bg-card rounded-lg border border-primary/20">
             <Button
               onClick={playPause}
               size="icon"
-              variant="outline"
-              className="rounded-full"
+              className="rounded-full bg-gradient-echo hover:opacity-90"
             >
-              <Play className="w-4 h-4" />
+              <Play className="w-4 h-4 text-black" />
             </Button>
             <div className="flex-1">
-              <div className="h-2 bg-muted rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-audio w-1/3" />
+              <div className="h-2 bg-muted rounded-full overflow-hidden border border-border">
+                <div className="h-full bg-gradient-echo w-1/3" />
               </div>
               <p className="text-sm text-muted-foreground mt-1">
                 {formatTime(recordingTime)}
@@ -197,7 +196,7 @@ const AudioRecorder = ({ onRecordingComplete, maxDuration = 300 }: AudioRecorder
           <div className="flex space-x-2">
             <Button
               onClick={saveRecording}
-              className="flex-1 bg-gradient-audio hover:opacity-90"
+              className="flex-1 bg-gradient-echo hover:opacity-90 text-black font-bold shadow-echo"
             >
               <Check className="w-4 h-4 mr-2" />
               Use Recording
@@ -205,7 +204,7 @@ const AudioRecorder = ({ onRecordingComplete, maxDuration = 300 }: AudioRecorder
             <Button
               onClick={resetRecording}
               variant="outline"
-              className="flex-1"
+              className="flex-1 border-border hover:bg-primary/10 hover:text-primary"
             >
               <Trash2 className="w-4 h-4 mr-2" />
               Retry

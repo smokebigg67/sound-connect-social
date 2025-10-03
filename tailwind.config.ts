@@ -102,7 +102,7 @@ export default {
         "wave": "wave 1s ease-in-out infinite",
       },
       backgroundImage: {
-        "gradient-audio": "var(--gradient-audio)",
+        "gradient-echo": "var(--gradient-echo)",
         "gradient-card": "var(--gradient-card)",
       },
     },

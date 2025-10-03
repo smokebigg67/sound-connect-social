@@ -64,9 +64,9 @@ const Connections = () => {
       <main className="container mx-auto px-4 pt-20 pb-8">
         <div className="max-w-4xl mx-auto space-y-6">
           <div>
-            <h1 className="text-3xl font-bold">Connections</h1>
+            <h1 className="text-3xl font-black">Connections</h1>
             <p className="text-muted-foreground">
-              Manage your audio community
+              Manage your <span className="text-primary font-semibold">ECHO</span> community
             </p>
           </div>
 
@@ -90,9 +90,9 @@ const Connections = () => {
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
-                        <Avatar>
+                        <Avatar className="border-2 border-primary">
                           <AvatarImage src={connection.avatar} />
-                          <AvatarFallback className="bg-gradient-audio text-white">
+                          <AvatarFallback className="bg-gradient-echo text-black font-bold">
                             {connection.name.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
@@ -120,9 +120,9 @@ const Connections = () => {
                     <CardContent className="p-4">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-3">
-                          <Avatar>
+                          <Avatar className="border-2 border-primary">
                             <AvatarImage src={request.avatar} />
-                            <AvatarFallback className="bg-gradient-audio text-white">
+                            <AvatarFallback className="bg-gradient-echo text-black font-bold">
                               {request.name.charAt(0)}
                             </AvatarFallback>
                           </Avatar>
@@ -136,7 +136,7 @@ const Connections = () => {
                         <div className="flex space-x-2">
                           <Button
                             size="sm"
-                            className="bg-gradient-audio hover:opacity-90"
+                            className="bg-gradient-echo hover:opacity-90 text-black font-bold"
                           >
                             <Check className="w-4 h-4 mr-1" />
                             Accept
@@ -166,9 +166,9 @@ const Connections = () => {
                   <CardContent className="p-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center space-x-3">
-                        <Avatar>
+                        <Avatar className="border-2 border-primary">
                           <AvatarImage src={suggestion.avatar} />
-                          <AvatarFallback className="bg-gradient-audio text-white">
+                          <AvatarFallback className="bg-gradient-echo text-black font-bold">
                             {suggestion.name.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
@@ -181,7 +181,7 @@ const Connections = () => {
                       </div>
                       <Button
                         size="sm"
-                        className="bg-gradient-audio hover:opacity-90"
+                        className="bg-gradient-echo hover:opacity-90 text-black font-bold"
                       >
                         <UserPlus className="w-4 h-4 mr-2" />
                         Connect

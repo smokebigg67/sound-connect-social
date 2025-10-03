@@ -67,19 +67,19 @@ const AudioPlayer = ({ audioUrl, duration = 0, className = "" }: AudioPlayerProp
       <Button
         onClick={togglePlay}
         size="icon"
-        className="rounded-full bg-gradient-audio hover:opacity-90 flex-shrink-0"
+        className="rounded-full bg-gradient-echo hover:opacity-90 flex-shrink-0 shadow-echo"
       >
         {isPlaying ? (
-          <Pause className="w-4 h-4 text-white" />
+          <Pause className="w-4 h-4 text-black" />
         ) : (
-          <Play className="w-4 h-4 text-white ml-0.5" />
+          <Play className="w-4 h-4 text-black ml-0.5" />
         )}
       </Button>
 
       <div className="flex-1 space-y-1">
-        <div className="relative h-2 bg-muted rounded-full overflow-hidden">
+        <div className="relative h-2 bg-muted rounded-full overflow-hidden border border-border">
           <div
-            className="absolute inset-y-0 left-0 bg-gradient-audio transition-all"
+            className="absolute inset-y-0 left-0 bg-gradient-echo transition-all"
             style={{ width: `${progress}%` }}
           />
           <input

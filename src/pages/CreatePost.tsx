@@ -44,9 +44,11 @@ const CreatePost = () => {
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <div>
-              <h1 className="text-3xl font-bold">Create Audio Post</h1>
+              <h1 className="text-3xl font-black">
+                Create an <span className="text-primary">Echo</span>
+              </h1>
               <p className="text-muted-foreground">
-                Share your thoughts with your connections
+                Share your voice with your connections
               </p>
             </div>
           </div>
@@ -80,9 +82,9 @@ const CreatePost = () => {
               <Button
                 onClick={handlePublish}
                 disabled={!audioBlob}
-                className="w-full bg-gradient-audio hover:opacity-90 disabled:opacity-50"
+                className="w-full bg-gradient-echo hover:opacity-90 disabled:opacity-50 text-black font-bold shadow-echo"
               >
-                Publish Post
+                Publish Echo
               </Button>
             </CardContent>
           </Card>

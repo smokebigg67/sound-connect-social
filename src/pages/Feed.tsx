@@ -53,9 +53,11 @@ const Feed = () => {
       <main className="container mx-auto px-4 pt-20 pb-8">
         <div className="max-w-2xl mx-auto space-y-6">
           <div className="space-y-2">
-            <h1 className="text-3xl font-bold">Your Feed</h1>
+            <h1 className="text-3xl font-black">
+              Your <span className="text-primary">ECHO</span> Feed
+            </h1>
             <p className="text-muted-foreground">
-              Listen to the latest audio posts from your connections
+              Listen to the latest echoes from your connections
             </p>
           </div>
 

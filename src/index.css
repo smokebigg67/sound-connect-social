@@ -8,48 +8,49 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 224 71% 4%;
-    --foreground: 213 31% 91%;
+    --background: 0 0% 0%;
+    --foreground: 0 0% 100%;
 
-    --card: 224 71% 6%;
-    --card-foreground: 213 31% 91%;
+    --card: 0 0% 5%;
+    --card-foreground: 0 0% 100%;
 
-    --popover: 224 71% 5%;
-    --popover-foreground: 213 31% 91%;
+    --popover: 0 0% 5%;
+    --popover-foreground: 0 0% 100%;
 
-    --primary: 263 70% 50%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 48 100% 50%;
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 189 94% 43%;
-    --secondary-foreground: 224 71% 4%;
+    --secondary: 0 0% 100%;
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 223 47% 11%;
-    --muted-foreground: 215.4 16.3% 56.9%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 60%;
 
-    --accent: 263 70% 50%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 48 100% 50%;
+    --accent-foreground: 0 0% 0%;
 
-    --destructive: 0 62.8% 50.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 223 47% 11%;
-    --input: 223 47% 11%;
-    --ring: 263 70% 50%;
+    --border: 0 0% 20%;
+    --input: 0 0% 15%;
+    --ring: 48 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Audio-specific colors */
-    --audio-primary: 263 70% 50%;
-    --audio-secondary: 189 94% 43%;
-    --audio-glow: 263 70% 50%;
+    /* Echo-specific colors */
+    --echo-yellow: 48 100% 50%;
+    --echo-black: 0 0% 0%;
+    --echo-white: 0 0% 100%;
+    --echo-gray: 0 0% 15%;
     
     /* Gradients */
-    --gradient-audio: linear-gradient(135deg, hsl(263 70% 50%) 0%, hsl(189 94% 43%) 100%);
-    --gradient-card: linear-gradient(180deg, hsl(224 71% 6%) 0%, hsl(224 71% 4%) 100%);
+    --gradient-echo: linear-gradient(135deg, hsl(48 100% 50%) 0%, hsl(38 100% 50%) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(0 0% 5%) 0%, hsl(0 0% 2%) 100%);
     
     /* Shadows */
-    --shadow-audio: 0 0 40px hsl(263 70% 50% / 0.3);
-    --shadow-card: 0 10px 30px -10px hsl(0 0% 0% / 0.5);
+    --shadow-echo: 0 0 60px hsl(48 100% 50% / 0.4);
+    --shadow-card: 0 10px 40px -10px hsl(48 100% 50% / 0.2);
     
     /* Animations */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
