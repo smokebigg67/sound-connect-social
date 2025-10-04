@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Heart } from "lucide-react";
 import AudioPlayer from "../audio/AudioPlayer";
@@ -44,18 +44,21 @@ const PostCard = ({
 
   return (
     <>
-      <Card 
-        className="relative overflow-hidden border-none shadow-[0_2px_12px_rgba(0,0,0,0.08)] bg-white/80 backdrop-blur-sm hover:shadow-[0_4px_20px_rgba(0,0,0,0.12)] transition-all"
-        style={{
-          background: author.avatar 
-            ? `linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.95) 100%), url(${author.avatar}) center/cover`
-            : 'rgba(255,255,255,0.8)'
-        }}
-      >
-        {/* Profile background with gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/50 to-white/90 pointer-events-none" />
+      <Card className="relative overflow-hidden border-none aspect-square w-full">
+        {/* Profile picture background */}
+        {author.avatar ? (
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${author.avatar})` }}
+          />
+        ) : (
+          <div className="absolute inset-0 bg-gradient-echo" />
+        )}
+        
+        {/* Gradient overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/60" />
 
-        <CardContent className="relative p-4 space-y-3">
+        <CardContent className="relative h-full p-4 flex flex-col">
           {/* Top section with swipeable mic and like button */}
           <div className="flex items-start justify-between">
             {/* Swipeable comment mic */}
@@ -68,59 +71,56 @@ const PostCard = ({
               variant="ghost"
               size="sm"
               onClick={() => setLiked(!liked)}
-              className={`rounded-full w-10 h-10 p-0 ${
+              className={`rounded-full w-12 h-12 p-0 ${
                 liked 
                   ? "bg-primary hover:bg-primary/90" 
-                  : "bg-white/60 hover:bg-white/80 backdrop-blur-sm"
+                  : "bg-white/20 hover:bg-white/30 backdrop-blur-sm"
               }`}
             >
               <Heart 
-                className={`w-5 h-5 ${
-                  liked ? "fill-black text-black" : "text-black"
+                className={`w-6 h-6 ${
+                  liked ? "fill-black text-black" : "text-white"
                 }`} 
               />
             </Button>
           </div>
 
-          {/* Author info */}
-          <div className="flex items-center space-x-3 mt-4">
-            <Avatar className="border-2 border-primary w-12 h-12">
-              <AvatarImage src={author.avatar} />
-              <AvatarFallback className="bg-gradient-echo text-black font-bold">
-                {author.name.charAt(0)}
-              </AvatarFallback>
-            </Avatar>
-            <div className="flex-1">
-              <p className="font-bold text-foreground text-sm">{author.name}</p>
-              <p className="text-xs text-muted-foreground">@{author.username}</p>
-            </div>
-            <span className="text-xs text-muted-foreground">{timestamp}</span>
-          </div>
+          {/* Spacer */}
+          <div className="flex-1" />
 
           {/* Audio player */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-3">
+          <div className="mb-4">
             <AudioPlayer audioUrl={audioUrl} duration={duration} />
           </div>
 
-          {/* Stats and actions */}
-          <div className="flex items-center justify-between pt-2">
-            <div className="flex items-center space-x-4 text-sm">
-              <span className="text-muted-foreground">
-                <span className="font-semibold text-foreground">{liked ? likes + 1 : likes}</span> loves
-              </span>
-              <span className="text-muted-foreground">
-                <span className="font-semibold text-foreground">{comments}</span> echoes
-              </span>
+          {/* Bottom section - User info and stats */}
+          <div className="space-y-3">
+            {/* User name - bottom left, no avatar circle */}
+            <div>
+              <p className="font-bold text-white text-lg drop-shadow-lg">{author.name}</p>
+              <p className="text-sm text-white/80 drop-shadow-md">@{author.username}</p>
             </div>
 
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShareOpen(true)}
-              className="text-xs font-medium hover:bg-primary/10 hover:text-primary"
-            >
-              Share
-            </Button>
+            {/* Stats and actions */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-4 text-sm">
+                <span className="text-white/90 drop-shadow-md">
+                  <span className="font-semibold">{liked ? likes + 1 : likes}</span> loves
+                </span>
+                <span className="text-white/90 drop-shadow-md">
+                  <span className="font-semibold">{comments}</span> echoes
+                </span>
+              </div>
+
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => setShareOpen(true)}
+                className="text-xs font-medium bg-white/20 hover:bg-white/30 text-white backdrop-blur-sm"
+              >
+                Share
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>

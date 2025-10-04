@@ -88,12 +88,23 @@ const SwipeableMic = ({ onSwipeComplete }: SwipeableMicProps) => {
         onMouseDown={(e) => handleStart(e.clientX)}
         onTouchStart={(e) => handleStart(e.touches[0].clientX)}
       >
-        <div className={`w-full h-full rounded-full bg-primary shadow-lg flex items-center justify-center ${
-          isDragging ? 'scale-110' : 'scale-100'
-        } transition-transform`}>
+        <div className={`w-full h-full rounded-full bg-primary shadow-lg flex items-center justify-center relative
+          ${isDragging ? 'scale-110' : 'scale-100'} 
+          transition-all duration-300`}
+        >
+          {/* Ripple effect */}
+          {isDragging && (
+            <>
+              <div className="absolute inset-0 rounded-full bg-primary/40 animate-ping" />
+              <div className="absolute inset-0 rounded-full bg-primary/30 animate-pulse" />
+            </>
+          )}
+          
           <Mic 
-            className={`w-5 h-5 text-black ${
-              dragPosition > threshold / 2 ? 'animate-pulse' : ''
+            className={`w-5 h-5 text-black relative z-10 transition-all duration-300 ${
+              dragPosition > threshold / 2 ? 'animate-pulse scale-110' : ''
+            } ${
+              isDragging ? 'rotate-12' : 'rotate-0'
             }`}
           />
         </div>
