@@ -23,9 +23,9 @@ const SwipeableCardContainer = ({ children }: SwipeableCardContainerProps) => {
 
   const variants = {
     enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? 300 : -300,
       opacity: 0,
-      scale: 0.8,
+      scale: 0.95,
     }),
     center: {
       x: 0,
@@ -33,9 +33,9 @@ const SwipeableCardContainer = ({ children }: SwipeableCardContainerProps) => {
       scale: 1,
     },
     exit: (direction: number) => ({
-      x: direction > 0 ? -1000 : 1000,
+      x: direction > 0 ? -300 : 300,
       opacity: 0,
-      scale: 0.8,
+      scale: 0.95,
     }),
   };
 
@@ -50,9 +50,9 @@ const SwipeableCardContainer = ({ children }: SwipeableCardContainerProps) => {
           animate="center"
           exit="exit"
           transition={{
-            x: { type: "spring", stiffness: 300, damping: 30 },
-            opacity: { duration: 0.3 },
-            scale: { duration: 0.3 },
+            x: { type: "spring", stiffness: 200, damping: 25 },
+            opacity: { duration: 0.4, ease: "easeInOut" },
+            scale: { duration: 0.4, ease: "easeInOut" },
           }}
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
