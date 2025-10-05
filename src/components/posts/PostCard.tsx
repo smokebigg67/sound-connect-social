@@ -6,6 +6,7 @@ import { Heart } from "lucide-react";
 import AudioPlayer from "../audio/AudioPlayer";
 import ShareDialog from "../social/ShareDialog";
 import SwipeableMic from "./SwipeableMic";
+import CommentDialog from "./CommentDialog";
 
 interface PostCardProps {
   author: {
@@ -130,8 +131,14 @@ const PostCard = ({
         onOpenChange={setShareOpen}
         postId={author.username}
       />
+
+      <CommentDialog
+        open={showCommentRecorder}
+        onOpenChange={setShowCommentRecorder}
+      />
     </>
   );
 };
 
 export default PostCard;
+

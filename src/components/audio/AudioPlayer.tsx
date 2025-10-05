@@ -149,23 +149,23 @@ const AudioPlayer = ({ audioUrl, duration = 0, className = "" }: AudioPlayerProp
         variant="ghost"
         size="sm"
         onClick={togglePlay}
-        className="rounded-full w-12 h-12 p-0 bg-white/20 hover:bg-white/30 backdrop-blur-sm"
+        className="rounded-full w-12 h-12 p-0 bg-white/20 hover:bg-white/30 backdrop-blur-sm transition-all duration-300 hover:scale-105"
       >
         {isPlaying ? (
-          <Pause className="w-6 h-6 text-white" />
+          <Pause className="w-6 h-6 text-white transition-transform duration-300" />
         ) : (
-          <Play className="w-6 h-6 text-white ml-0.5" />
+          <Play className="w-6 h-6 text-white ml-0.5 transition-transform duration-300" />
         )}
       </Button>
 
       <div className="flex-1 space-y-2">
         {/* Waveform visualizer */}
-        <div className="h-16 bg-black/20 backdrop-blur-sm rounded-lg overflow-hidden">
+        <div className="h-16 bg-black/20 backdrop-blur-sm rounded-lg overflow-hidden transition-all duration-300 hover:bg-black/30">
           <WaveformVisualizer isPlaying={isPlaying} audioRef={audioRef} />
         </div>
         
         {/* Time display */}
-        <div className="flex justify-between text-xs text-white/80 drop-shadow-md">
+        <div className="flex justify-between text-xs text-white/80 drop-shadow-md font-medium">
           <span>{formatTime(currentTime)}</span>
           <span>{formatTime(audioDuration || duration || 0)}</span>
         </div>

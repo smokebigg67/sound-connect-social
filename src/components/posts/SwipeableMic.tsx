@@ -1,115 +1,196 @@
-import { useState, useRef, useEffect } from "react";
-import { Mic } from "lucide-react";
+import { useState, useCallback } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useSpring,
+  useTransform,
+  type PanInfo,
+} from "framer-motion";
+import { Check, Loader2, Mic } from "lucide-react";
 
 interface SwipeableMicProps {
   onSwipeComplete: () => void;
 }
 
+const DRAG_CONSTRAINTS = { left: 0, right: 155 };
+const DRAG_THRESHOLD = 0.9;
+
+const BUTTON_STATES = {
+  initial: { width: "12rem" },
+  completed: { width: "3rem" },
+};
+
+const ANIMATION_CONFIG = {
+  spring: {
+    type: "spring" as const,
+    stiffness: 400,
+    damping: 40,
+    mass: 0.8,
+  },
+};
+
 const SwipeableMic = ({ onSwipeComplete }: SwipeableMicProps) => {
-  const [dragPosition, setDragPosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const threshold = 120; // pixels to swipe before triggering
+  const [completed, setCompleted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
 
-  const handleStart = (clientX: number) => {
+  const dragX = useMotionValue(0);
+  const springX = useSpring(dragX, ANIMATION_CONFIG.spring);
+  const dragProgress = useTransform(
+    springX,
+    [0, DRAG_CONSTRAINTS.right],
+    [0, 1]
+  );
+
+  const handleDragStart = useCallback(() => {
+    if (completed) return;
     setIsDragging(true);
-    setStartX(clientX - dragPosition);
-  };
+  }, [completed]);
 
-  const handleMove = (clientX: number) => {
-    if (!isDragging) return;
-    
-    const newPosition = clientX - startX;
-    // Clamp between 0 and threshold
-    const clampedPosition = Math.max(0, Math.min(threshold, newPosition));
-    setDragPosition(clampedPosition);
-  };
-
-  const handleEnd = () => {
-    if (dragPosition >= threshold) {
-      onSwipeComplete();
-      setDragPosition(0);
-    } else {
-      // Spring back
-      setDragPosition(0);
-    }
+  const handleDragEnd = () => {
+    if (completed) return;
     setIsDragging(false);
+
+    const progress = dragProgress.get();
+    if (progress >= DRAG_THRESHOLD) {
+      setCompleted(true);
+      setStatus("loading");
+      
+      // Simulate loading, then trigger callback
+      setTimeout(() => {
+        setStatus("success");
+        setTimeout(() => {
+          onSwipeComplete();
+          // Reset after animation
+          setTimeout(() => {
+            setCompleted(false);
+            setStatus("idle");
+            dragX.set(0);
+          }, 500);
+        }, 300);
+      }, 800);
+    } else {
+      dragX.set(0);
+    }
   };
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => handleMove(e.clientX);
-    const handleTouchMove = (e: TouchEvent) => handleMove(e.touches[0].clientX);
-    const handleMouseUp = () => handleEnd();
-    const handleTouchEnd = () => handleEnd();
+  const handleDrag = (
+    _event: MouseEvent | TouchEvent | PointerEvent,
+    info: PanInfo
+  ) => {
+    if (completed) return;
+    const newX = Math.max(0, Math.min(info.offset.x, DRAG_CONSTRAINTS.right));
+    dragX.set(newX);
+  };
 
-    if (isDragging) {
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("touchmove", handleTouchMove);
-      document.addEventListener("mouseup", handleMouseUp);
-      document.addEventListener("touchend", handleTouchEnd);
-    }
-
-    return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("touchmove", handleTouchMove);
-      document.removeEventListener("mouseup", handleMouseUp);
-      document.removeEventListener("touchend", handleTouchEnd);
-    };
-  }, [isDragging, dragPosition]);
-
-  const progress = (dragPosition / threshold) * 100;
+  const adjustedWidth = useTransform(springX, (x) => x + 48);
 
   return (
-    <div 
-      ref={containerRef}
-      className="relative w-full h-12 bg-white/20 backdrop-blur-sm rounded-full overflow-hidden"
+    <motion.div
+      animate={completed ? BUTTON_STATES.completed : BUTTON_STATES.initial}
+      transition={ANIMATION_CONFIG.spring}
+      className="relative flex h-12 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm"
     >
-      {/* Progress background */}
-      <div 
-        className="absolute inset-0 bg-primary/20 transition-all duration-150"
-        style={{ width: `${progress}%` }}
-      />
-      
-      {/* Swipe hint text */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <span className="text-xs font-medium text-white/60">
-          {dragPosition > 0 ? "Keep swiping →" : "Swipe to comment →"}
-        </span>
-      </div>
+      {!completed && (
+        <motion.div
+          style={{
+            width: adjustedWidth,
+          }}
+          className="absolute inset-y-0 left-0 z-0 rounded-full bg-primary/30"
+        />
+      )}
 
-      {/* Draggable mic button */}
-      <div
-        className="absolute left-0 top-0 h-12 w-12 cursor-grab active:cursor-grabbing z-10"
-        style={{ 
-          transform: `translateX(${dragPosition}px)`,
-          transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-        }}
-        onMouseDown={(e) => handleStart(e.clientX)}
-        onTouchStart={(e) => handleStart(e.touches[0].clientX)}
-      >
-        <div className={`w-full h-full rounded-full bg-primary shadow-lg flex items-center justify-center relative
-          ${isDragging ? 'scale-110' : 'scale-100'} 
-          transition-all duration-300`}
-        >
-          {/* Ripple effect */}
-          {isDragging && (
-            <>
-              <div className="absolute inset-0 rounded-full bg-primary/40 animate-ping" />
-              <div className="absolute inset-0 rounded-full bg-primary/30 animate-pulse" />
-            </>
-          )}
-          
-          <Mic 
-            className={`w-5 h-5 text-black relative z-10 transition-all duration-300 ${
-              dragPosition > threshold / 2 ? 'animate-pulse scale-110' : ''
-            } ${
-              isDragging ? 'rotate-12' : 'rotate-0'
-            }`}
-          />
-        </div>
-      </div>
-    </div>
+      <AnimatePresence>
+        {!completed && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          >
+            <span className="text-xs font-medium text-white/70">
+              {isDragging ? "Keep swiping →" : "Swipe to comment →"}
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {!completed && (
+          <motion.div
+            drag="x"
+            dragConstraints={DRAG_CONSTRAINTS}
+            dragElastic={0.05}
+            dragMomentum={false}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            onDrag={handleDrag}
+            style={{ x: springX }}
+            className="absolute left-0 z-10 flex cursor-grab items-center justify-start active:cursor-grabbing"
+          >
+            <motion.div
+              animate={{
+                scale: isDragging ? 1.1 : 1,
+              }}
+              className="w-12 h-12 rounded-full bg-primary shadow-lg flex items-center justify-center relative"
+            >
+              {isDragging && (
+                <>
+                  <motion.div 
+                    className="absolute inset-0 rounded-full bg-primary/40"
+                    animate={{
+                      scale: [1, 1.5, 1],
+                      opacity: [0.5, 0, 0.5],
+                    }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                    }}
+                  />
+                </>
+              )}
+              <Mic className="w-5 h-5 text-black relative z-10" />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {completed && (
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <div className="w-12 h-12 rounded-full bg-primary shadow-lg flex items-center justify-center">
+              <AnimatePresence mode="wait">
+                {status === "loading" && (
+                  <motion.div
+                    key="loading"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <Loader2 className="animate-spin w-5 h-5 text-black" />
+                  </motion.div>
+                )}
+                {status === "success" && (
+                  <motion.div
+                    key="success"
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0 }}
+                  >
+                    <Check className="w-5 h-5 text-black" />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.div>
   );
 };
 
