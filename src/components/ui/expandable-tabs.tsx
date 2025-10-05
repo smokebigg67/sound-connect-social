@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useOnClickOutside } from "usehooks-ts";
+import { useOnClickOutside } from "@/hooks/use-click-outside";
 import { cn } from "@/lib/utils";
 import { LucideIcon } from "lucide-react";
 
