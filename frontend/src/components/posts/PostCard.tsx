@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Heart, MessageCircle, Share2, MoreHorizontal, Trash2 } from 'lucide-react';
+import { Heart, MessageCircle, Share2, MoveHorizontal as MoreHorizontal, Trash2 } from 'lucide-react';
 import { postsAPI } from '@/lib/api';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/button';
