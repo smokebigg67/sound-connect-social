@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Compass, User } from 'lucide-react';
+import { Home, Compass, User, Users, Bell } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Navigation() {
@@ -41,7 +41,31 @@ export default function Navigation() {
             </NavLink>
 
             <NavLink
-              to={`/profile/${user?.id}`}
+              to="/connections"
+              className={({ isActive }) =>
+                `flex flex-col md:flex-row items-center gap-1 md:gap-2 transition-colors ${
+                  isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                }`
+              }
+            >
+              <Users className="w-6 h-6" />
+              <span className="text-xs md:text-sm">Connections</span>
+            </NavLink>
+
+            <NavLink
+              to="/notifications"
+              className={({ isActive }) =>
+                `flex flex-col md:flex-row items-center gap-1 md:gap-2 transition-colors ${
+                  isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'
+                }`
+              }
+            >
+              <Bell className="w-6 h-6" />
+              <span className="text-xs md:text-sm">Notifications</span>
+            </NavLink>
+
+            <NavLink
+              to="/profile"
               className={({ isActive }) =>
                 `flex flex-col md:flex-row items-center gap-1 md:gap-2 transition-colors ${
                   isActive ? 'text-primary' : 'text-muted-foreground hover:text-foreground'

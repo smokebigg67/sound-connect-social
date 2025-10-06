@@ -62,8 +62,8 @@ export const authAPI = {
   register: (userData: { email: string; password: string; username: string }) =>
     api.post('/auth/register', userData),
   
-  googleAuth: (token: string) =>
-    api.post('/auth/google', { token }),
+  connectGoogleDrive: () =>
+    api.post('/auth/google-drive'),
   
   logout: () =>
     api.post('/auth/logout'),
@@ -74,7 +74,16 @@ export const authAPI = {
 
 export const postsAPI = {
   getAll: (params?: { page?: number; limit?: number }) =>
-    api.get('/posts', { params }),
+    api.get('/posts/explore', { params }),
+  
+  getFeed: (params?: { page?: number; limit?: number }) =>
+    api.get('/posts/feed', { params }),
+  
+  getTrending: (params?: { page?: number; limit?: number }) =>
+    api.get('/posts/trending', { params }),
+  
+  getExplore: (params?: { page?: number; limit?: number }) =>
+    api.get('/posts/explore', { params }),
   
   getById: (id: string) =>
     api.get(`/posts/${id}`),
@@ -90,8 +99,8 @@ export const postsAPI = {
   like: (id: string) =>
     api.post(`/posts/${id}/like`),
   
-  unlike: (id: string) =>
-    api.delete(`/posts/${id}/like`)
+  recordListen: (id: string) =>
+    api.post(`/posts/${id}/listen`)
 };
 
 export const commentsAPI = {
@@ -104,7 +113,7 @@ export const commentsAPI = {
     }),
   
   delete: (postId: string, commentId: string) =>
-    api.delete(`/posts/${postId}/comments/${commentId}`)
+    api.delete(`/comments/${commentId}`)
 };
 
 export const usersAPI = {
@@ -117,24 +126,42 @@ export const usersAPI = {
     }),
   
   search: (query: string) =>
-    api.get('/users/search', { params: { q: query } })
+    api.get('/users/search', { params: { q: query } }),
+  
+  getStorageInfo: () =>
+    api.get('/users/me/storage')
 };
 
 export const connectionsAPI = {
-  getFollowers: (userId?: string) =>
-    api.get(userId ? `/users/${userId}/followers` : '/connections/followers'),
+  getPendingRequests: () =>
+    api.get('/connections/pending'),
   
-  getFollowing: (userId?: string) =>
-    api.get(userId ? `/users/${userId}/following` : '/connections/following'),
+  getSentRequests: () =>
+    api.get('/connections/sent'),
   
-  follow: (userId: string) =>
-    api.post(`/connections/${userId}/follow`),
+  getFollowing: () =>
+    api.get('/connections/me'),
+  
+  sendRequest: (userId: string, message?: string) =>
+    api.post(`/connections/${userId}/request`, { message }),
+  
+  respondToRequest: (requestId: string, status: 'accepted' | 'rejected') =>
+    api.put(`/connections/${requestId}`, { status }),
   
   unfollow: (userId: string) =>
-    api.delete(`/connections/${userId}/follow`)
+    api.delete(`/connections/${userId}`)
 };
 
 export const contactAPI = {
-  reveal: (userId: string) =>
-    api.post(`/contact/${userId}/reveal`)
+  requestReveal: (userId: string, message?: string) =>
+    api.post(`/contact/${userId}/request`, { message }),
+  
+  respondToRequest: (requestId: string, status: 'accepted' | 'rejected') =>
+    api.put(`/contact/${requestId}`, { status }),
+  
+  getRequests: () =>
+    api.get('/contact/requests'),
+  
+  getRevealed: () =>
+    api.get('/contact/revealed')
 };
