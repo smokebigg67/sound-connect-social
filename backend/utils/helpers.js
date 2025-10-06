@@ -1,7 +1,7 @@
-const crypto = require('crypto');
-const path = require('path');
-const fs = require('fs');
-const logger = require('./logger');
+import crypto from 'crypto';
+import path from 'path';
+import fs from 'fs';
+import { logger } from './logger.js';
 
 class Helpers {
   /**
@@ -383,4 +383,4 @@ class Helpers {
   }
 }
 
-module.exports = new Helpers();
+export default new Helpers();

@@ -1,8 +1,8 @@
-const { google } = require('googleapis');
-const fs = require('fs');
-const stream = require('stream');
-const { refreshAccessToken } = require('../config/cloudStorage');
-const logger = require('../utils/logger');
+import { google } from 'googleapis';
+import fs from 'fs';
+import stream from 'stream';
+import { refreshAccessToken } from '../config/cloudStorage.js';
+import { logger } from '../utils/logger.js';
 
 class GoogleDriveService {
   constructor() {
@@ -303,4 +303,4 @@ class GoogleDriveService {
   }
 }
 
-module.exports = new GoogleDriveService();
+export default new GoogleDriveService();

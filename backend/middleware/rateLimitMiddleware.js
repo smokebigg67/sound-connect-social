@@ -1,6 +1,6 @@
-onst rateLimit = require('express-rate-limit');
-const config = require('../config/environment');
-const logger = require('../utils/logger');
+import rateLimit from 'express-rate-limit';
+import config from '../config/environment.js';
+import { logger } from '../utils/logger.js';
 
 // General rate limiter for all API routes
 const generalLimiter = rateLimit({
@@ -209,7 +209,7 @@ const connectionRequestLimiter = rateLimit({
   }
 });
 
-module.exports = {
+export {
   generalLimiter,
   authLimiter,
   uploadLimiter,

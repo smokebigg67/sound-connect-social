@@ -1,4 +1,4 @@
-const logger = require('../utils/logger');
+import { logger } from '../utils/logger.js';
 
 class TranscriptionService {
   constructor() {
@@ -319,4 +319,4 @@ class TranscriptionService {
   }
 }
 
-module.exports = new TranscriptionService();
+export default new TranscriptionService();

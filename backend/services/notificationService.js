@@ -1,4 +1,4 @@
-const logger = require('../utils/logger');
+import { logger } from '../utils/logger.js';
 
 class NotificationService {
   constructor() {
@@ -141,7 +141,7 @@ class NotificationService {
    */
   async getUserNotificationPreferences(userId) {
     try {
-      const User = require('../models/User');
+      const User = (await import('../models/User.js')).default;
       const user = await User.findById(userId).select('settings.notifications');
 
       if (!user) {
@@ -394,4 +394,4 @@ class NotificationService {
   }
 }
 
-module.exports = new NotificationService();
+export default new NotificationService();

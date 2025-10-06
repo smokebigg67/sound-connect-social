@@ -1,5 +1,5 @@
-const googleDriveService = require('./googleDriveService');
-const logger = require('../utils/logger');
+import googleDriveService from './googleDriveService.js';
+import { logger } from '../utils/logger.js';
 
 class StorageService {
   /**
@@ -278,4 +278,4 @@ class StorageService {
   }
 }
 
-module.exports = new StorageService();
+export default new StorageService();

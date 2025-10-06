@@ -1,6 +1,6 @@
-const audioUtils = require('../utils/audioUtils');
-const storageService = require('./storageService');
-const logger = require('../utils/logger');
+import audioUtils from '../utils/audioUtils.js';
+import storageService from './storageService.js';
+import { logger } from '../utils/logger.js';
 
 class AudioService {
   /**
@@ -243,4 +243,4 @@ class AudioService {
   }
 }
 
-module.exports = new AudioService();
+export default new AudioService();

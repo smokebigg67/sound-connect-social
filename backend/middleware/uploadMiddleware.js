@@ -1,8 +1,8 @@
-const multer = require('multer');
-const path = require('path');
-const config = require('../config/environment');
-const audioUtils = require('../utils/audioUtils');
-const logger = require('../utils/logger');
+import multer from 'multer';
+import path from 'path';
+import config from '../config/environment.js';
+import audioUtils from '../utils/audioUtils.js';
+import { logger } from '../utils/logger.js';
 
 // Configure multer for audio file uploads
 const storage = multer.diskStorage({
@@ -40,7 +40,7 @@ const upload = multer({
   },
 });
 
-const handleAudioUpload = (req, res, next) => {
+export const handleAudioUpload = (req, res, next) => {
   upload.single('audio')(req, res, async (err) => {
     if (err) {
       logger.error('Audio upload error:', err);
@@ -122,7 +122,7 @@ const handleAudioUpload = (req, res, next) => {
 };
 
 // Middleware to handle multiple audio uploads (for comments, etc.)
-const handleMultipleAudioUpload = (maxFiles = 1) => {
+export const handleMultipleAudioUpload = (maxFiles = 1) => {
   return (req, res, next) => {
     const uploadMultiple = upload.array('audio', maxFiles);
 
@@ -230,29 +230,23 @@ const handleMultipleAudioUpload = (maxFiles = 1) => {
 };
 
 // Cleanup middleware to remove temporary files
-const cleanupTempFiles = (req, res, next) => {
-  const fs = require('fs');
+export const cleanupTempFiles = (req, res, next) => {
+  import('fs').then(fs => {
+    // Clean up after response is sent
+    res.on('finish', () => {
+      if (req.file && fs.existsSync(req.file.path)) {
+        fs.unlinkSync(req.file.path);
+      }
 
-  // Clean up after response is sent
-  res.on('finish', () => {
-    if (req.file && fs.existsSync(req.file.path)) {
-      fs.unlinkSync(req.file.path);
-    }
-
-    if (req.files) {
-      req.files.forEach((file) => {
-        if (fs.existsSync(file.path)) {
-          fs.unlinkSync(file.path);
-        }
-      });
-    }
+      if (req.files) {
+        req.files.forEach((file) => {
+          if (fs.existsSync(file.path)) {
+            fs.unlinkSync(file.path);
+          }
+        });
+      }
+    });
   });
 
   next();
-};
-
-module.exports = {
-  handleAudioUpload,
-  handleMultipleAudioUpload,
-  cleanupTempFiles,
 };

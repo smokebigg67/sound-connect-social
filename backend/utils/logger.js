@@ -1,7 +1,7 @@
-const winston = require('winston');
-const path = require('path');
-const fs = require('fs');
-const config = require('../config/environment');
+import winston from 'winston';
+import path from 'path';
+import fs from 'fs';
+import config from '../config/environment.js';
 
 // Create logs directory if it doesn't exist
 const logDir = path.dirname(config.LOG_FILE);
@@ -231,7 +231,7 @@ const logDebug = (message, metadata = {}) => {
   });
 };
 
-module.exports = {
+export {
   logger,
   requestLogger,
   dbLogger,

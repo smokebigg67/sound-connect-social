@@ -1,8 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-const ffmpeg = require('fluent-ffmpeg');
-const config = require('../config/environment');
-const logger = require('./logger');
+import fs from 'fs';
+import path from 'path';
+import config from '../config/environment.js';
+import { logger } from './logger.js';
 
 class AudioUtils {
   /**
@@ -345,4 +344,4 @@ class AudioUtils {
   }
 }
 
-module.exports = new AudioUtils();
+export default new AudioUtils();

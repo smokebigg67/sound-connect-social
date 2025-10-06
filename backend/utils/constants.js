@@ -314,7 +314,7 @@ const WEBHOOK_EVENTS = {
   CONNECTION_DELETED: 'connection.deleted',
 };
 
-module.exports = {
+export {
   USER_ROLES,
   CONNECTION_STATUSES,
   POST_PRIVACY,
