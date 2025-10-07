@@ -1,4 +1,4 @@
-mport User from '../models/User.js';
+import User from '../models/User.js';
 import Connection from '../models/Connection.js';
 import storageService from '../services/storageService.js';
 import { logger } from '../utils/logger.js';

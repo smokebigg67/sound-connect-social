@@ -100,15 +100,18 @@ export const postsAPI = {
     api.post(`/posts/${id}/like`),
   
   recordListen: (id: string) =>
-    api.post(`/posts/${id}/listen`)
+    api.post(`/posts/${id}/listen`),
+
+  getUserPosts: (userId: string, params?: { page?: number; limit?: number }) =>
+    api.get(`/posts/user/${userId}`, { params })
 };
 
 export const commentsAPI = {
   getByPost: (postId: string) =>
-    api.get(`/posts/${postId}/comments`),
+    api.get(`/comments/posts/${postId}/comments`),
   
   create: (postId: string, formData: FormData) =>
-    api.post(`/posts/${postId}/comments`, formData, {
+    api.post(`/comments/posts/${postId}/comments`, formData, {
       headers: { 'Content-Type': 'multipart/form-data' }
     }),
   
@@ -149,7 +152,10 @@ export const connectionsAPI = {
     api.put(`/connections/${requestId}`, { status }),
   
   unfollow: (userId: string) =>
-    api.delete(`/connections/${userId}`)
+    api.delete(`/connections/${userId}`),
+
+  cancelRequest: (requestId: string) =>
+    api.delete(`/connections/requests/${requestId}`)
 };
 
 export const contactAPI = {
@@ -163,5 +169,8 @@ export const contactAPI = {
     api.get('/contact/requests'),
   
   getRevealed: () =>
-    api.get('/contact/revealed')
+    api.get('/contact/revealed'),
+
+  reveal: (userId: string) =>
+    api.post(`/contact/${userId}/request`)
 };

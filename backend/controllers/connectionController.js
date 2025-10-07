@@ -398,7 +398,11 @@ const connectionController = {
       const userId = req.user._id;
       const { limit = 20, skip = 0 } = req.query;
 
-      const requests = await Connection.findSentRequests(userId)
+      const requests = await Connection.find({
+        requesterId: userId,
+        status: 'pending'
+      })
+        .populate('recipientId', 'username profile.displayName profile.avatar')
         .limit(parseInt(limit))
         .skip(parseInt(skip))
         .sort({ createdAt: -1 });

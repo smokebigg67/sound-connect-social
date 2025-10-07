@@ -6,7 +6,10 @@ interface User {
   id: string;
   email: string;
   username: string;
-  avatar?: string;
+  profile?: {
+    displayName?: string;
+    avatar?: string;
+  };
 }
 
 interface AuthContextType {
@@ -36,8 +39,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const loadUser = async () => {
     try {
-      const { data } = await authAPI.login({ email: '', password: '' });
-      setUser(data.user);
+      // Get current user instead of trying to login with empty credentials
+      const response = await fetch('/api/users/me', {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
+        }
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setUser(data.user);
+      } else {
+        throw new Error('Failed to load user');
+      }
     } catch (error) {
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');

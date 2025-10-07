@@ -1,4 +1,4 @@
-mport Joi from 'joi';
+import Joi from 'joi';
 import { logger } from '../utils/logger.js';
 
 // Validation schemas

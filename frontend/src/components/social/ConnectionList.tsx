@@ -28,7 +28,7 @@ export default function ConnectionList() {
 
   const { data: connections, isLoading } = useQuery({
     queryKey: ['connections'],
-    queryFn: () => connectionsAPI.getFollowing().then(res => res.data)
+    queryFn: () => connectionsAPI.getFollowing().then(res => res.data.connections || [])
   });
 
   const removeConnectionMutation = useMutation({
@@ -62,10 +62,10 @@ export default function ConnectionList() {
     revealContactMutation.mutate(userId);
   };
 
-  const filteredConnections = connections?.filter((connection: Connection) =>
+  const filteredConnections = (connections || []).filter((connection: Connection) =>
     connection.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
     connection.profile.displayName?.toLowerCase().includes(searchQuery.toLowerCase())
-  ) || [];
+  );
 
   if (isLoading) {
     return (
@@ -80,7 +80,7 @@ export default function ConnectionList() {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">My Connections</h2>
         <span className="text-sm text-muted-foreground">
-          {connections?.length || 0} connections
+          {(connections || []).length} connections
         </span>
       </div>
 
