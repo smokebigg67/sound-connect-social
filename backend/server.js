@@ -1,7 +1,7 @@
-import app from './app.js';
-import config from './config/environment.js';
-import { logger } from './utils/logger.js';
-import audioUtils from './utils/audioUtils.js';
+const app = require('./app.js');
+const config = require('./config/environment.js');
+const { logger } = require('./utils/logger.js');
+const audioUtils = require('./utils/audioUtils.js');
 
 const PORT = config.PORT || 5000;
 
@@ -109,4 +109,4 @@ const startCleanupTasks = () => {
 startCleanupTasks();
 
 // Export server for testing
-export default server;
+module.exports = server;

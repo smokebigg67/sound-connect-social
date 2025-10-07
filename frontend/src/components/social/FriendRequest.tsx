@@ -3,7 +3,7 @@ import { Check, X, Clock } from 'lucide-react';
 import { connectionsAPI } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 import { formatDistanceToNow } from 'date-fns';
 
 interface ConnectionRequest {

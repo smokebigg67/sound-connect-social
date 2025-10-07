@@ -1,25 +1,25 @@
-import express from 'express';
-import cors from 'cors';
-import helmet from 'helmet';
-import compression from 'compression';
-import connectDB from './config/database.js';
-import config from './config/environment.js';
-import {
+const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
+const compression = require('compression');
+const connectDB = require('./config/database.js');
+const config = require('./config/environment.js');
+const {
   errorHandler,
   notFound,
   handleUnhandledRejections,
   handleUncaughtExceptions,
-} from './middleware/errorMiddleware.js';
-import { expressRequestLogger } from './utils/logger.js';
-import { generalLimiter } from './middleware/rateLimitMiddleware.js';
+} = require('./middleware/errorMiddleware.js');
+const { expressRequestLogger } = require('./utils/logger.js');
+const { generalLimiter } = require('./middleware/rateLimitMiddleware.js');
 
 // Route imports
-import authRoutes from './routes/auth.js';
-import userRoutes from './routes/users.js';
-import connectionRoutes from './routes/connections.js';
-import postRoutes from './routes/posts.js';
-import commentRoutes from './routes/comments.js';
-import contactRoutes from './routes/contact.js';
+const authRoutes = require('./routes/auth.js');
+const userRoutes = require('./routes/users.js');
+const connectionRoutes = require('./routes/connections.js');
+const postRoutes = require('./routes/posts.js');
+const commentRoutes = require('./routes/comments.js');
+const contactRoutes = require('./routes/contact.js');
 
 // Create Express app
 const app = express();
@@ -146,4 +146,4 @@ process.on('SIGINT', () => {
   process.exit(0);
 });
 
-export default app;
+module.exports = app;

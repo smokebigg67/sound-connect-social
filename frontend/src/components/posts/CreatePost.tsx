@@ -9,7 +9,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import AudioRecorder from '@/components/audio/AudioRecorder';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 export default function CreatePost() {
   const [title, setTitle] = useState('');

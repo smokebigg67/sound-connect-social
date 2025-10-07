@@ -8,7 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import AudioPlayer from '@/components/audio/AudioPlayer';
 import AudioVisualizer from '@/components/audio/AudioVisualizer';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 import { formatDistanceToNow } from 'date-fns';
 
 interface Post {

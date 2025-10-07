@@ -5,7 +5,7 @@ import { connectionsAPI, contactAPI } from '@/lib/api';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Input } from '@/components/ui/input';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 interface Connection {
   _id: string;

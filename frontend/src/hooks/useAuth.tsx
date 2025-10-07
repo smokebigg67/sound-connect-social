@@ -1,6 +1,6 @@
 import { useState, useEffect, createContext, useContext, ReactNode } from 'react';
 import { authAPI } from '@/lib/api';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 interface User {
   id: string;
@@ -40,17 +40,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const loadUser = async () => {
     try {
       // Get current user instead of trying to login with empty credentials
-      const response = await fetch('/api/users/me', {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('token')}`
-        }
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setUser(data.user);
-      } else {
-        throw new Error('Failed to load user');
-      }
+      const { data } = await api.get('/users/me');
+      setUser(data.user);
     } catch (error) {
       localStorage.removeItem('token');
       localStorage.removeItem('refreshToken');

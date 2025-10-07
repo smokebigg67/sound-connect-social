@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Mic, Square, Play, Pause, RotateCcw, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { toast } from 'sonner';
+import { toast } from '@/hooks/use-toast';
 
 interface AudioRecorderProps {
   onRecordingComplete: (audioBlob: Blob) => void;
