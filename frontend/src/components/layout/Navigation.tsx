@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import { Home, Compass, User, Users, Bell } from 'lucide-react';
+import { Hop as Home, Compass, User, Users, Bell } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function Navigation() {
